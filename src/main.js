@@ -1,8 +1,9 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router'
+import store from './store'
+import axios from 'axios'
 
-Vue.config.productionTip = false
+axios.defaults.baseURL = 'https://apidjackets.codewithstein.com'
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+createApp(App).use(store).use(router, axios).mount('#app')
