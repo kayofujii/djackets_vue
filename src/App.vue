@@ -11,26 +11,27 @@
         </a>
       </div>
 
-      <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu}">
-        <dir class="navbar-start">
+      <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu }">
+        <div class="navbar-start">
           <div class="navbar-item">
             <form method="get" action="/search">
-              <div class="field has_addons">
+              <div class="field has-addons">
                 <div class="control">
                   <input type="text" class="input" placeholder="What are you looking for?" name="query">
                 </div>
 
                 <div class="control">
                   <button class="button is-success">
-                    <span class="icon">
+                      <span class="icon">
                       <i class="fas fa-search"></i>
-                    </span>
+                      </span>
                   </button>
                 </div>
               </div>
             </form>
           </div>
-        </dir>
+        </div>
+
         <div class="navbar-end">
           <router-link to="/summer" class="navbar-item">Summer</router-link>
           <router-link to="/winter" class="navbar-item">Winter</router-link>
@@ -64,6 +65,8 @@
 </template>
 
 <script>
+import axios from "axios"
+
 export default ({
   data() {
     return {
@@ -75,6 +78,14 @@ export default ({
   },
   beforeCreate() {
     this.$store.commit('initializeStore')
+
+    const token = this.$store.state.token
+
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = "Token " + token
+    } else {
+      axios.defaults.headers.common['Authorization'] = ""
+    }
   },
   mounted() {
     this.cart = this.$store.state.cart
